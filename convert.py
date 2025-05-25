@@ -5,6 +5,7 @@ from ます_form import ます_form
 from て_form import て_form
 from た_form import た_form
 from ない_form import ない_form
+from う_form import う_form
 
 with open('verbs.json', 'r') as f:
     VERBS = json.load(f)
@@ -13,7 +14,8 @@ FORMS = [
     ます_form,
     て_form,
     た_form,
-    ない_form
+    ない_form,
+    う_form
 ]
 
 def select_conversion():
@@ -22,6 +24,7 @@ def select_conversion():
     print('2) て')
     print('3) た')
     print('4) ない')
+    print('5) う')
 
     from_form = input()
     try:
@@ -36,6 +39,7 @@ def select_conversion():
     print('2) て')
     print('3) た')
     print('4) ない')
+    print('5) う')
 
     to_form = input()
     try:
