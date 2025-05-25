@@ -1,55 +1,61 @@
 import json
 from random import randint
 
+from ます_form import ます_form
 from て_form import て_form
 from た_form import た_form
 
 with open('verbs.json', 'r') as f:
     VERBS = json.load(f)
 
-GAMES = [
-    (て_form,'forward'),
-    (て_form,'backward'),
-    (た_form,'forward'),
-    (た_form,'backward')
+FORMS = [
+    ます_form,
+    て_form,
+    た_form
 ]
 
-def select_game():
-    print('For the game you wish to play what for?')
-    print('1) ます_to_て')
-    print('2) て_to_ます')
-    print('3) ます_to_た')
-    print('4) た_to_ます')
+def select_conversion():
+    print('Convert from which form?')
+    print('1) ます')
+    print('2) て')
+    print('3) た')
 
-    game = input()
+    from_form = input()
     try:
-        game = int(game)
+        from_form = int(from_form)
     except:
-        raise ValueError(f'Please a number from 1-{len(GAMES)}.')
-    if game < 1 or game > len(GAMES):
-        raise ValueError(f'Please a number from 1-{len(GAMES)}.')
-    return GAMES[game-1]
+        raise ValueError(f'Please a number from 1-{len(FORMS)}.')
+    if from_form < 1 or from_form > len(FORMS):
+        raise ValueError(f'Please a number from 1-{len(FORMS)}.')
 
-def correct_conversion(game, verb, input):
-    if game[1] == 'forward':
-        return input in game[0](verb).values()
-    return input in verb.values()
+    print('Convert to which form?')
+    print('1) ます')
+    print('2) て')
+    print('3) た')
+
+    to_form = input()
+    try:
+        to_form = int(to_form)
+    except:
+        raise ValueError(f'Please a number from 1-{len(FORMS)}.')
+    if to_form < 1 or to_form > len(FORMS):
+        raise ValueError(f'Please a number from 1-{len(FORMS)}.')
+    
+    return {'from': FORMS[from_form - 1], 'to': FORMS[to_form - 1]}
 
 def conversion_game():
 
-    game = select_game()
+    conversion = select_conversion()
 
     random_index = randint(0, len(VERBS)-1)
     verb = VERBS[random_index]
-    if game[1] == 'forward':
-        print(f"{verb['kanji']}/{verb['kana']}")
-    else:
-        print(f"{game[0](verb)['kanji']}/{game[0](verb)['kana']}")
+    print(f"{conversion['from'](verb)['kanji']}/{conversion['from'](verb)['kana']}")
     user_input = input()
+
     break_flag = False
     while user_input not in ('x','X','ｘ','Ｘ'):
         
-        while not correct_conversion(game, verb, user_input):
+        while user_input not in conversion['to'](verb).values():
             print('X')
             user_input = input()
             if user_input in ('x','X','ｘ','Ｘ'):
@@ -60,10 +66,5 @@ def conversion_game():
         print('O')
         random_index = randint(0, len(VERBS)-1)
         verb = VERBS[random_index]
-        if game[1] == 'forward':
-            print(f"{verb['kanji']}/{verb['kana']}")
-        else:
-            print(f"{game[0](verb)['kanji']}/{game[0](verb)['kana']}")
+        print(f"{conversion['from'](verb)['kanji']}/{conversion['from'](verb)['kana']}")
         user_input = input()
-    #if convert_from in ('ます', 'masu'):
-    #    if convert_to in ('て', 'te'):
