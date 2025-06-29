@@ -17,7 +17,7 @@ def ない_form(input_verb):
     if verb['kanji'][-3:] == '来ます':
         verb['kanji'] = verb['kanji'][:-3] + '来ない'
         verb['kana'] = verb['kana'][:-3] + 'こない'
-        verb['romaji'] = verb['romaji'][:-5] + 'konai'
+        verb['romaji'] = verb['romaji'][:-6] + 'konai'
         return verb
     if verb['kanji'] == 'あります':
         verb['kanji'] = 'ない'
@@ -35,6 +35,8 @@ def ない_form(input_verb):
             verb['romaji'] = verb['romaji'][:-7] + 'tanai'
         elif input_verb['kanji'][-3] == 'し':
             verb['romaji'] = verb['romaji'][:-7] + 'sanai'
+        elif input_verb['kanji'][-3] == 'い':
+            verb['romaji'] = verb['romaji'][:-4] + 'wanai'
         else:
             verb['romaji'] = verb['romaji'][:-5] + 'anai'
         return verb

@@ -1,4 +1,4 @@
-from て_form import て_form
+from verbs.て_form import て_form
 
 def た_form(input_verb):
     verb = て_form(input_verb.copy())

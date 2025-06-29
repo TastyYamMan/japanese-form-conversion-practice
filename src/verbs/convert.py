@@ -1,14 +1,17 @@
 import json
 from random import randint
 
-from ます_form import ます_form
-from て_form import て_form
-from た_form import た_form
-from ない_form import ない_form
-from う_form import う_form
+from verbs.ます_form import ます_form
+from verbs.て_form import て_form
+from verbs.た_form import た_form
+from verbs.ない_form import ない_form
+from verbs.う_form import う_form
 
-with open('verbs.json', 'r') as f:
+# TODO: Switch to xlsx
+with open('verbs/verbs.json', 'r') as f:
     VERBS = json.load(f)
+
+# TODO: create a verb object (maybe do after creating a db).
 
 FORMS = [
     ます_form,
