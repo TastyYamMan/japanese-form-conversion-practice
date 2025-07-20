@@ -12,18 +12,24 @@ def revision(language):
     next_pass = []
 
     if language == '日本語':
-        words = session.query(Word).order_by(Word.j_to_e_revision_status_id).filter(
-            Word.j_to_e_revision_status_id > 0,
-            (Word.j_to_e_last_time_revised - datetime.datetime.now()).days > 1
-        ).limit(50).all()
+        words = [
+            session.query(Word).filter(
+                Word.j_to_e_revision_status_id == i+1,
+                (Word.j_to_e_last_time_revised - datetime.datetime.now()).days > 1
+            ).limit(20).all()
+            for i in range(3)
+        ]
     else:
-        words = session.query(Word).order_by(Word.e_to_j_revision_status_id).filter(
-            Word.e_to_j_revision_status_id > 0,
-            (Word.e_to_j_last_time_revised - datetime.datetime.now()).days > 1
-        ).limit(50).all()
+        words = [
+            session.query(Word).filter(
+                Word.e_to_j_revision_status_id == i+1,
+                (Word.e_to_j_last_time_revised - datetime.datetime.now()).days > 1
+            ).limit(20).all()
+            for i in range(3)
+        ]
     if len(words) == 0:
         print('Nothing to revise!')
-
+    
     for word in words:
         result = flash_card(word, language)
         if result is None:
