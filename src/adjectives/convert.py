@@ -1,33 +1,31 @@
-import json
+import pandas as pd
 from random import randint
 
-from verbs.ます_form import ます_form
-from verbs.て_form import て_form
-from verbs.た_form import た_form
-from verbs.ない_form import ない_form
-from verbs.う_form import う_form
+from adjectives.present_form import present_form
+from adjectives.past_form import past_form
+from adjectives.negative_form import negative_form
+from adjectives.past_negative_form import past_negative_form
+from adjectives.て_form import て_form
 
-# TODO: Switch to xlsx
-with open('verbs/verbs.json', 'r') as f:
-    VERBS = json.load(f)
+ADJS = pd.read_excel('adjectives/adjs.xlsx')
 
-# TODO: create a verb object (maybe do after creating a db).
+# TODO: create an adjective object (maybe do after creating a db).
 
 FORMS = [
-    ます_form,
-    て_form,
-    た_form,
-    ない_form,
-    う_form
+    present_form,
+    past_form,
+    negative_form,
+    past_negative_form,
+    て_form
 ]
 
 def select_conversion():
     print('Convert from which form?')
-    print('1) ます')
-    print('2) て')
-    print('3) た')
-    print('4) ない')
-    print('5) う')
+    print('1) present')
+    print('2) past')
+    print('3) negative')
+    print('4) past_negative')
+    print('5) て')
 
     from_form = input()
     try:
@@ -38,11 +36,11 @@ def select_conversion():
         raise ValueError(f'Please a number from 1-{len(FORMS)}.')
 
     print('Convert to which form?')
-    print('1) ます')
-    print('2) て')
-    print('3) た')
-    print('4) ない')
-    print('5) う')
+    print('1) present')
+    print('2) past')
+    print('3) negative')
+    print('4) past_negative')
+    print('5) て')
 
     to_form = input()
     try:
@@ -58,16 +56,16 @@ def conversion_game():
 
     conversion = select_conversion()
 
-    random_index = randint(0, len(VERBS)-1)
-    verb = VERBS[random_index]
-    print(f"{conversion['from'](verb)['kanji']}/{conversion['from'](verb)['kana']}")
+    random_index = randint(0, len(ADJS)-1)
+    adj = ADJS.iloc[random_index,:]
+    print(f"{conversion['from'](adj)['kanji']}/{conversion['from'](adj)['kana']}")
     user_input = input()
 
     break_flag = False
     while user_input not in ('x','X','ｘ','Ｘ'):
         
-        while user_input not in conversion['to'](verb).values():
-            print(conversion['to'](verb))
+        while not conversion['to'](adj).isin([user_input]).any():
+            print(conversion['to'](adj))
             print('X')
             user_input = input()
             if user_input in ('x','X','ｘ','Ｘ'):
@@ -76,7 +74,7 @@ def conversion_game():
         if break_flag:
             break
         print('O')
-        random_index = randint(0, len(VERBS)-1)
-        verb = VERBS[random_index]
-        print(f"{conversion['from'](verb)['kanji']}/{conversion['from'](verb)['kana']}")
+        random_index = randint(0, len(ADJS)-1)
+        adj = ADJS.iloc[random_index,:]
+        print(f"{conversion['from'](adj)['kanji']}/{conversion['from'](adj)['kana']}")
         user_input = input()
