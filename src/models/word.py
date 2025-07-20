@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-import .Base
+from .base import Base
 
 class Word(Base):
     __tablename__ = 'word'
