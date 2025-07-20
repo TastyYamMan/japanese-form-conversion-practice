@@ -4,7 +4,7 @@ import models.word  # Import to register models
 import models.revision_status  # Import to register models
 
 # Create db
-engine = create_engine('sqlite:///src/japanese_practice.db')
+engine = create_engine('sqlite:///japanese_practice.db')
 
 # Create tables
 Base.metadata.create_all(engine)

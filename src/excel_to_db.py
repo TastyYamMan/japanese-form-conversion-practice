@@ -4,11 +4,11 @@ from models import Word
 
 import pandas as pd
 
-engine = create_engine('sqlite:///src/japanese_practice.db')
+engine = create_engine('sqlite:///japanese_practice.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-df_words = pd.read_excel('src/words/words.xlsx')
+df_words = pd.read_excel('words/words.xlsx')
 
 for index, row in df_words.iterrows():
     check = session.query(Word).filter(

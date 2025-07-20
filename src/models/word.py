@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from models import Base
 from sqlalchemy.orm import relationship
+from models import Base
 
 class Word(Base):
     __tablename__ = 'word'
@@ -11,12 +11,27 @@ class Word(Base):
     romaji = Column(String, nullable=False)
     meaning = Column(String, nullable=False)
     lesson = Column(String, nullable=False)
-    #verb_id = Column(Integer, nullable=True)
-    #adjective_id = Column(Integer, nullable=True)
-    revision_status_id = Column(ForeignKey("revision_status.id"), nullable=True)
-    last_time_revised = Column(DateTime, nullable=True)
+    incorrect_count = Column(Integer, nullable=False, default=0)
 
-    revision_status = relationship("RevisionStatus", back_populates="word")
+    e_to_j_revision_status_id = Column(Integer, ForeignKey("revision_status.id"), nullable=True)
+    j_to_e_revision_status_id = Column(Integer, ForeignKey("revision_status.id"), nullable=True)
+
+    e_to_j_last_time_revised = Column(DateTime, nullable=True)
+    j_to_e_last_time_revised = Column(DateTime, nullable=True)
+
+    e_to_j_revision_status = relationship(
+        "RevisionStatus",
+        foreign_keys=[e_to_j_revision_status_id],
+        back_populates="words_e_to_j"
+    )
+    j_to_e_revision_status = relationship(
+        "RevisionStatus",
+        foreign_keys=[j_to_e_revision_status_id],
+        back_populates="words_j_to_e"
+    )
 
     def __repr__(self):
-        return f"<Word(kanji={self.kanji}, kana={self.kana}, romaji={self.romaji}, meaning={self.meaning}, lesson={self.lesson})>"
+        return (
+            f"<Word(kanji={self.kanji}, kana={self.kana}, romaji={self.romaji}, "
+            f"meaning={self.meaning}, lesson={self.lesson})>"
+        )
