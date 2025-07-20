@@ -29,7 +29,7 @@ def revision(language):
         ]
     if len(words) == 0:
         print('Nothing to revise!')
-    
+         
     for word in words:
         result = flash_card(word, language)
         if result is None:
