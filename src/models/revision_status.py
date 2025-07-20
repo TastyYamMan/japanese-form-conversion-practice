@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from models import Base
+import .Base
 from sqlalchemy.orm import relationship
 
 class RevisionStatus(Base):
