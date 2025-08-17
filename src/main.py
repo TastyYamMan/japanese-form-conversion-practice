@@ -4,6 +4,7 @@ import adjectives.convert
 
 # TODO: Don't need two files for for conversion games they are the same but with different forms and objects (verbs/adjs)
 #        i.e. consolidate to one file
+# TODO: Write a script that deals with duplicate words
 
 GAMES = [
     memory_game := words.memory_game.memory_game,

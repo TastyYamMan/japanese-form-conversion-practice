@@ -5,7 +5,7 @@ def upgrade_status(word, language):
     if language == '日本語':
         if word.j_to_e_revision_status_id is None:
             word.j_to_e_revision_status_id = 0
-        elif word.j_to_e_revision_status_id in [1,2]:
+        elif word.j_to_e_revision_status_id in [1,2] and word.incorrect_count == 0:
             word.j_to_e_revision_status_id -= 1
         elif word.j_to_e_revision_status_id == 3 and word.incorrect_count < 2:
             word.j_to_e_revision_status_id -= 1
@@ -13,7 +13,7 @@ def upgrade_status(word, language):
     else:
         if word.e_to_j_revision_status_id is None:
             word.e_to_j_revision_status_id = 0
-        elif word.e_to_j_revision_status_id in [1,2]:
+        elif word.e_to_j_revision_status_id in [1,2] and word.incorrect_count == 0:
             word.e_to_j_revision_status_id -= 1
         elif word.e_to_j_revision_status_id == 3 and word.incorrect_count < 2:
             word.e_to_j_revision_status_id -= 1
