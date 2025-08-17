@@ -20,7 +20,15 @@ def select_game():
 def choose_lesson():
     print(f'Which lesson do you want to practice (1-{LESSONS})?')
     lesson = int(input())
-    return lesson
+    print(f'Do you want to practice with all words? (y/n)')
+    all = input()
+    if all in ('Y','y','ｙ','Ｙ'):
+        all = True
+    elif all in ('N','n','ｎ','Ｎ'):
+        all = False
+    else:
+        raise ValueError('input needs to be y/n.')
+    return lesson, all
 
 def memory_game():
     language, activity = select_game()
